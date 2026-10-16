@@ -1,0 +1,23 @@
+name: Build DesukillzRTP
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Build
+        run: mvn -B clean package
+      - name: Upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: DesukillzRTP
+          path: target/DesukillzRTP.jar
