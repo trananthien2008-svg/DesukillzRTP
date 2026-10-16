@@ -1,0 +1,169 @@
+# ============================================================
+#  DesukillzRTP
+#  Sau khi sửa file này, gõ /rtp reload (GUI đang mở sẽ tự cập nhật)
+# ============================================================
+
+# Thời gian hồi (giây) sau mỗi lần RTP thành công. 0 = không hồi.
+# Người có quyền desukillz.rtp.cooldown.bypass không bị hồi.
+cooldown-seconds: 60
+
+# ------------------------------------------------------------
+# THẾ GIỚI
+#   enabled: false  = bị khoá, không ai RTP vào được (kể cả dùng lệnh /rtp nether)
+#   world-name      = tên thư mục world trên server (plugin KHÔNG tự tạo world)
+#   min/max-radius  = khoảng cách tới tâm (center-x, center-z)
+#   min-y/max-y     = khoảng độ cao tìm chỗ đứng (dùng cho Nether và The End)
+#   max-attempts    = số lần thử tối đa trước khi báo không tìm được
+#
+# MỞ KHOÁ NETHER / THE END: đổi enabled thành true rồi gõ /rtp reload
+# ------------------------------------------------------------
+worlds:
+  overworld:
+    enabled: true
+    world-name: "world"
+    min-radius: 500
+    max-radius: 5000
+    center-x: 0
+    center-z: 0
+    max-attempts: 30
+  nether:
+    enabled: false
+    world-name: "world_nether"
+    min-radius: 100
+    max-radius: 2000
+    center-x: 0
+    center-z: 0
+    min-y: 33
+    max-y: 120
+    max-attempts: 40
+  end:
+    enabled: false
+    world-name: "world_the_end"
+    # Đảo chính của The End có bán kính khoảng 70-80 block.
+    # Muốn RTP sang các đảo ngoài, đặt min-radius >= 1100 và max-radius lớn hơn.
+    min-radius: 55
+    max-radius: 70
+    center-x: 0
+    center-z: 0
+    min-y: 5
+    max-y: 100
+    max-attempts: 60
+
+# ------------------------------------------------------------
+# GUI (27 ô). Số ô tính từ 0: hàng giữa là ô 9 đến 17.
+# ------------------------------------------------------------
+gui:
+  title: "&b&l✦ &3&lCHỌN THẾ GIỚI &d&lRTP &b&l✦"
+  # Ô trang trí. Màu: WHITE, ORANGE, MAGENTA, LIGHT_BLUE, YELLOW, LIME, PINK, GRAY,
+  # LIGHT_GRAY, CYAN, PURPLE, BLUE, BROWN, GREEN, RED, BLACK
+  filler-enabled: true
+  filler-color: "BLACK"
+  items:
+    overworld:
+      slot: 11
+      material: GRASS_BLOCK
+      name: "&a&lOVERWORLD"
+      lore:
+        - "&7Dịch chuyển đến vị trí ngẫu nhiên"
+        - ""
+        - "&eNhấn để dịch chuyển"
+      locked-material: GRASS_BLOCK
+      locked-name: "&a&lOVERWORLD ĐÃ BỊ KHÓA"
+      locked-lore:
+        - "&7Thế giới Overworld chưa mở cửa"
+        - ""
+        - "&cBạn chưa thể RTP tại đây"
+    nether:
+      slot: 13
+      material: NETHERRACK
+      name: "&c&lNETHER"
+      lore:
+        - "&7Dịch chuyển đến Nether ngẫu nhiên"
+        - ""
+        - "&eNhấn để dịch chuyển"
+      locked-material: NETHERRACK
+      locked-name: "&c&lNETHER ĐÃ BỊ KHÓA"
+      locked-lore:
+        - "&7Thế giới Nether chưa mở cửa"
+        - ""
+        - "&cBạn chưa thể RTP tại đây"
+    end:
+      slot: 15
+      material: END_STONE
+      name: "&5&lTHE END"
+      lore:
+        - "&7Dịch chuyển đến The End ngẫu nhiên"
+        - ""
+        - "&eNhấn để dịch chuyển"
+      locked-material: END_STONE
+      locked-name: "&5&lTHE END ĐÃ BỊ KHÓA"
+      locked-lore:
+        - "&7Thế giới The End chưa mở cửa"
+        - ""
+        - "&cBạn chưa thể RTP tại đây"
+
+# ------------------------------------------------------------
+# ÂM THANH
+# Dùng tên âm thanh của Minecraft (viết thường, dấu chấm), ví dụ:
+#   BLOCK_CHEST_OPEN         -> block.chest.open
+#   BLOCK_NOTE_BLOCK_PLING   -> block.note_block.pling
+#   BLOCK_NOTE_BLOCK_BASS    -> block.note_block.bass
+# Để sound trống ("") để tắt âm thanh đó.
+# ------------------------------------------------------------
+sounds:
+  open:    { sound: "block.chest.open",        volume: 0.8, pitch: 1.0 }
+  select:  { sound: "block.note_block.pling",  volume: 1.0, pitch: 1.6 }
+  locked:  { sound: "block.note_block.bass",   volume: 1.0, pitch: 0.7 }
+  success: { sound: "entity.enderman.teleport", volume: 0.8, pitch: 1.0 }
+  fail:    { sound: "entity.villager.no",      volume: 1.0, pitch: 1.0 }
+  close:   { sound: "block.chest.close",       volume: 0.8, pitch: 1.0 }
+
+# ------------------------------------------------------------
+# HÀNG CHỜ PVP /rtpq  (độc lập với GUI RTP)
+#   /rtpq        vào hàng chờ, đủ 2 người sẽ được ghép cặp và RTP đến gần nhau
+#   /rtpq leave  rời hàng chờ
+# ------------------------------------------------------------
+queue:
+  enabled: true
+  world: overworld
+  # Khoảng cách tối đa giữa hai đối thủ sau khi dịch chuyển
+  pair-distance: 8
+  # Trận tự kết thúc sau số giây này
+  match-timeout-seconds: 600
+  # false = người đang trong trận không được dùng /rtp để trốn
+  allow-rtp-during-match: false
+
+# ------------------------------------------------------------
+# TIN NHẮN. Dùng {world}, {seconds}, {x}, {y}, {z}, {attempts}, {player}
+# ------------------------------------------------------------
+messages:
+  prefix: "&8[&b&lDesukillzRTP&8] "
+  only-players: "&cLệnh này chỉ dùng được trong game."
+  no-permission: "&cBạn không có quyền dùng lệnh này."
+  no-permission-world: "&cBạn không có quyền RTP tại &f{world}&c."
+  usage: "&eDùng: &f/rtp &7hoặc &f/rtp <overworld|nether|end>"
+  reloaded: "&aĐã tải lại cấu hình DesukillzRTP."
+  locked: "&c{world} đã bị khóa. &7Bạn chưa thể RTP tại đây."
+  world-missing: "&cThế giới &f{world} &cchưa được tải hoặc không tồn tại. Hãy báo cho quản trị viên."
+  world-wrong-environment: "&cThế giới &f{world} &cđược cấu hình sai loại dimension. Hãy báo cho quản trị viên."
+  cooldown: "&cBạn cần chờ &f{seconds}s &cnữa mới dùng RTP được."
+  already-searching: "&eĐang tìm vị trí cho bạn, vui lòng chờ..."
+  searching: "&7Đang tìm vị trí an toàn tại &f{world}&7..."
+  success: "&aĐã dịch chuyển đến &f{world} &7(&f{x}&7, &f{y}&7, &f{z}&7)"
+  no-location: "&cKhông tìm được vị trí an toàn sau &f{attempts} &clần thử. Hãy thử lại."
+  teleport-failed: "&cDịch chuyển thất bại, hãy thử lại."
+  in-match: "&cBạn đang trong trận PvP, không thể dùng RTP."
+  queue-disabled: "&cHàng chờ PvP đang tạm đóng."
+  queue-joined: "&aĐã vào hàng chờ PvP. &7Đang đợi đối thủ... Gõ &f/rtpq leave &7để rời."
+  queue-left: "&eĐã rời hàng chờ PvP."
+  queue-not-in: "&cBạn không ở trong hàng chờ."
+  queue-already: "&cBạn đã ở trong hàng chờ rồi."
+  queue-in-match: "&cBạn đang trong trận, không thể rời hàng chờ."
+  queue-busy: "&cBạn đang RTP, hãy đợi xong rồi vào hàng chờ."
+  queue-found: "&6Đã ghép cặp với &f{player}&6! Đang tìm chỗ đấu..."
+  queue-started: "&aTrận đấu bắt đầu với &f{player}&a. Chúc may mắn!"
+  queue-failed: "&cKhông tìm được chỗ đấu, đã hủy ghép cặp."
+  queue-win: "&aBạn đã thắng trận đấu với &f{player}&a!"
+  queue-lose: "&cBạn đã thua trận đấu với &f{player}&c."
+  queue-opponent-left: "&aĐối thủ &f{player} &ađã rời trận, bạn thắng!"
+  queue-timeout: "&eTrận đấu đã hết giờ."

@@ -1,0 +1,41 @@
+name: DesukillzRTP
+prefix: DesukillzRTP
+version: 1.0.0
+main: me.desukillz.rtp.DesukillzRtpPlugin
+api-version: '1.20'
+folia-supported: true
+softdepend: [LuckPerms]
+description: RTP bằng GUI cho Overworld, Nether và The End, có khoá thế giới, cooldown và hàng chờ PvP /rtpq.
+
+commands:
+  rtp:
+    description: Mở GUI chọn thế giới RTP hoặc RTP trực tiếp
+    usage: /rtp [overworld|nether|end|reload]
+    permission: desukillz.rtp.use
+  rtpq:
+    description: Vào hàng chờ ghép cặp PvP
+    usage: /rtpq [leave]
+    permission: desukillz.rtp.queue
+
+permissions:
+  desukillz.rtp.use:
+    description: Dùng /rtp và GUI RTP
+    default: true
+  desukillz.rtp.world.overworld:
+    description: RTP vào Overworld
+    default: true
+  desukillz.rtp.world.nether:
+    description: RTP vào Nether (khi thế giới đã được mở khoá trong config)
+    default: true
+  desukillz.rtp.world.end:
+    description: RTP vào The End (khi thế giới đã được mở khoá trong config)
+    default: true
+  desukillz.rtp.cooldown.bypass:
+    description: Không bị cooldown RTP
+    default: op
+  desukillz.rtp.queue:
+    description: Dùng /rtpq
+    default: true
+  desukillz.rtp.admin:
+    description: Dùng /rtp reload
+    default: op
